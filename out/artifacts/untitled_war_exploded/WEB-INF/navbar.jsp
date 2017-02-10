@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/"><span class="navbar-brand">Just Java</span></a>
+            <a href="/untitled_war_exploded/"><span class="navbar-brand">Just Java</span></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
