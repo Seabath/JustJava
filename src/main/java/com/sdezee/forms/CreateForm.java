@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CreateForm {
 
-    private static final String FORM_LOGIN = "login";
+    public static final String FORM_LOGIN = "login";
     private static final String FORM_PASS = "password";
     private static final String FORM_PASS2 = "password2";
 
@@ -62,5 +62,13 @@ public class CreateForm {
             return null;
         }
         return ret;
+    }
+
+    public void addError(String key, String mess){
+        errors.put(key, mess);
+    }
+
+    public void setResult(String mess) {
+        result = mess;
     }
 }
