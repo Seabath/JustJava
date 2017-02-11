@@ -31,9 +31,9 @@ public class Create extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        if (form.getErrors().isEmpty()) {
+        if (form.getErrors().isEmpty() && user != null) {
             session.setAttribute(ATT_USER, user);
-            int res = addUser(user);
+            int res = user.insertDatabase();
             if (res != 0) // c'est pas forcément la bonne condition mais c'est en cas de non insertion
                 return;
             else
@@ -46,17 +46,5 @@ public class Create extends HttpServlet {
         req.setAttribute(ATT_USER, user);
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
-    }
-
-    private int addUser(User user) {
-        //Get Session
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        //start transaction
-        session.beginTransaction();
-        //Save the Model object
-        session.save(user);
-        //Commit transaction
-        session.getTransaction().commit();
-        return user.getId();
     }
 }

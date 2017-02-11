@@ -13,15 +13,35 @@ import java.util.Properties;
 public class HibernateUtil {
 
     private final static String CFG_PATH = "/resources/hibernate.cfg.xml";
+    private final static String CFG_ANNOTATION_PATH = "/resources/hibernate.cfg.xml";
+
 
     private static SessionFactory sessionFactory;
+    private static SessionFactory sessionAnnotationFactory;
     private static SessionFactory sessionJavaConfigFactory;
-
 
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration();
             configuration.configure(CFG_PATH);
+
+
+            ServiceRegistry serviceRegistry = new
+                    StandardServiceRegistryBuilder()
+                    .applySettings(configuration.getProperties()).build();
+
+            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            return sessionFactory;
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+
+    private static SessionFactory buildSessionAnnotationFactory() {
+        try {
+            Configuration configuration = new Configuration();
+            configuration.configure(CFG_ANNOTATION_PATH);
 
 
             ServiceRegistry serviceRegistry = new
@@ -43,11 +63,11 @@ public class HibernateUtil {
             props.put("hibernate.connection.driver_class",
                     "com.mysql.jdbc.Driver");
             props.put("hibernate.connection.url",
-                    "jbdc:mysql://localhost/TestDB");
+                    "jbdc:mysql://localhost/JustJava");
             props.put("hibernate.connection.username",
-                    "admin");
+                    "java");
             props.put("hibernate.connection.password",
-                    "admin");
+                    "java");
             props.put("hibernate.current_session_context_class",
                     "thread");
 
@@ -59,7 +79,7 @@ public class HibernateUtil {
                     StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
 
-            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             return sessionFactory;
 
         } catch (Throwable ex) {
@@ -71,5 +91,17 @@ public class HibernateUtil {
         if (sessionFactory == null)
             sessionFactory = buildSessionFactory();
         return sessionFactory;
+    }
+
+    public static SessionFactory getSessionAnnotationFactory() {
+        if (sessionAnnotationFactory == null)
+            sessionAnnotationFactory = buildSessionAnnotationFactory();
+        return sessionAnnotationFactory;
+    }
+
+    public static SessionFactory getSessionJavaConfigFactory() {
+        if (sessionJavaConfigFactory == null)
+            sessionJavaConfigFactory = buildSessionFactory();
+        return sessionJavaConfigFactory;
     }
 }

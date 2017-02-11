@@ -28,7 +28,7 @@
                 <span class="">${form.errors['password2']}</span>
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-default">Login</button>
+                <button type="submit" class="btn btn-default">Create</button>
             </div>
             <p>${form.result}</p>
         </fieldset>
