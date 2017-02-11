@@ -12,10 +12,10 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/untitled_war_exploded/index">Home</a>
+                    <a href="/index">Home</a>
                 </li>
                 <li class="">
-                    <a href="/untitled_war_exploded/search">Search</a>
+                    <a href="/search">Search</a>
                 </li>
 
             </ul>

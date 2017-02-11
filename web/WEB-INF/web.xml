@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>com.sdzee.servlets.Login</servlet-class>
+        <servlet-class>main.java.com.sdezee.servlets.Login</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -16,10 +16,19 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Create</servlet-name>
+        <servlet-class>main.java.com.sdezee.servlets.Create</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Create</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>Index</servlet-name>
-        <servlet-class>com.sdzee.servlets.Index</servlet-class>
+        <servlet-class>main.java.com.sdezee.servlets.Index</servlet-class>
     </servlet>
 
     <servlet-mapping>

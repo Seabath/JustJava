@@ -1,7 +1,7 @@
-package com.sdzee.servlets;
+package main.java.com.sdezee.servlets;
 
-import com.sdezee.entities.User;
-import com.sdezze.forms.LoginForm;
+import main.java.com.sdezee.entities.User;
+import main.java.com.sdezee.forms.CreateForm;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class Login extends HttpServlet {
+public class Create extends HttpServlet {
 
     public static final String ATT_USER = "user";
     public static final String ATT_FORM = "form";
     public static final String ATT_SESSION_USER = "sessionUser";
-    public static final String VIEW = "/WEB-INF/login.jsp";
+    public static final String VIEW = "/WEB-INF/create.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,14 +24,15 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LoginForm form = new LoginForm();
+        CreateForm form = new CreateForm();
         User user = form.connectUser(req);
 
         HttpSession session = req.getSession();
 
-        if (!form.getErrors().isEmpty()) {
+        if (form.getErrors().isEmpty()) {
             session.setAttribute(ATT_USER, user);
-            resp.sendRedirect("/untitled_war_exploded/index");
+            resp.sendRedirect("/");
+            return;
         }
         else
             session.setAttribute(ATT_USER, null);

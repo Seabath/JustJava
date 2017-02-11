@@ -5,17 +5,6 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
         version="3.0">
 
-    <servlet>
-        <servlet-name>Index</servlet-name>
-        <servlet-class>com.sdzee.servlets.Index</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Index</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
-
 
     <servlet>
         <servlet-name>Login</servlet-name>
@@ -24,8 +13,21 @@
 
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>com.sdzee.servlets.Index</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+
 
 
 

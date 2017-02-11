@@ -1,6 +1,6 @@
-package com.sdzee.servlets;
+package main.java.com.sdezee.servlets;
 
-import com.sdezee.entities.User;
+import main.java.com.sdezee.entities.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

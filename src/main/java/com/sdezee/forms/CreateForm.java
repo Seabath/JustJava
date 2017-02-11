@@ -1,16 +1,16 @@
-package com.sdezze.forms;
+package main.java.com.sdezee.forms;
 
-import com.sdezee.entities.User;
-import sun.net.httpserver.HttpServerImpl;
+import main.java.com.sdezee.entities.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginForm {
+public class CreateForm {
 
     private static final String FORM_LOGIN = "login";
     private static final String FORM_PASS = "password";
+    private static final String FORM_PASS2 = "password2";
 
     private String result;
 
@@ -28,14 +28,15 @@ public class LoginForm {
     public User connectUser(HttpServletRequest req) {
         String login = getValueForm(req, FORM_LOGIN);
         String password = getValueForm(req, FORM_PASS);
+        String password2 = getValueForm(req, FORM_PASS2);
 
         User user = new User();
         if (!checkLogin(login))
             errors.put(FORM_LOGIN, "Bad login");
         user.setLogin(login);
-        if (!checkPassword(password))
-            errors.put(FORM_PASS, "Bad password");
 
+        if (!checkPassword(password, password2))
+            errors.put(FORM_PASS, "Bad password");
         user.setPassword(password);
 
         if (errors.isEmpty())
@@ -49,8 +50,9 @@ public class LoginForm {
         return login != null;
     }
 
-    private boolean checkPassword(String password) {
-        return  password != null;
+    private boolean checkPassword(String password, String password2) {
+        boolean b = password != null && password2 != null;
+        return b && password.equals(password2);
     }
 
     private static String getValueForm(HttpServletRequest req, String nameFom) {

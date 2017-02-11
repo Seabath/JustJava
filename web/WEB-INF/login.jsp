@@ -10,7 +10,7 @@
         <h3>Login</h3>
     </div>
 
-    <form method="post" action="login" role="form" class="row">
+    <form method="post" action="/" role="form" class="row">
         <fieldset>
             <div class="form-group col-sm-4">
                 <label for="login">Login*</label>
@@ -24,8 +24,9 @@
             </div>
             <div class="col-sm-12">
                 <button type="submit" class="btn btn-default">Login</button>
+                <a class="btn btn-info" role="button" href="/create">Create Account</a>
             </div>
-            <p class="${empty form.errors ? 'succes' : 'erreur'}">${form.result}</p>
+            <p>${form.result}</p>
         </fieldset>
     </form>
 </div>
