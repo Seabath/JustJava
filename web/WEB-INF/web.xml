@@ -36,8 +36,25 @@
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>main.java.com.sdezee.servlets.Search</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Change</servlet-name>
+        <servlet-class>main.java.com.sdezee.servlets.Change</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Change</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

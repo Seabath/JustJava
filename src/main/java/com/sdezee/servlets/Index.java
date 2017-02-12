@@ -12,16 +12,24 @@ import java.io.IOException;
 
 public class Index extends HttpServlet {
 
+    public static final String ATT_USER = "user";
+    public static final String ATT_FORM = "form";
+    public static final String VIEW = "/WEB-INF/index.jsp";
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String message = "";
         HttpSession session = req.getSession();
-        User users = (User) session.getAttribute("user");
-        if (users == null)
-            message = "";
-        else message = users.getLogin();
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            resp.sendRedirect("/");
+            return;
+        }
+        else
+            message = user.getLogin();
 
         req.setAttribute( "user", message );
-        this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
+        this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
     }
 }

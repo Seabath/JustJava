@@ -2,8 +2,6 @@ package main.java.com.sdezee.servlets;
 
 import main.java.com.sdezee.entities.User;
 import main.java.com.sdezee.forms.CreateForm;
-import main.java.com.sdezee.util.HibernateUtil;
-import org.hibernate.Session;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,8 +32,10 @@ public class Create extends HttpServlet {
         if (form.getErrors().isEmpty() && user != null) {
             session.setAttribute(ATT_USER, user);
             int res = user.insertDatabase();
-            if (res != 0) // c'est pas forcément la bonne condition mais c'est en cas de non insertion
+            if (res != 0) {
+                resp.sendRedirect("/index");
                 return;
+            }
             else
                 form.addError(CreateForm.FORM_LOGIN, "Login already exists"); // pas forcément cette raison, mais osef
         } else

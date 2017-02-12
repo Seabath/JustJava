@@ -2,10 +2,6 @@ package main.java.com.sdezee.servlets;
 
 import main.java.com.sdezee.entities.User;
 import main.java.com.sdezee.forms.LoginForm;
-import main.java.com.sdezee.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +19,8 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        session.setAttribute(ATT_USER, null);
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
     }
 
@@ -45,30 +43,5 @@ public class Login extends HttpServlet {
         req.setAttribute(ATT_USER, user);
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
-    }
-
-
-    private User getUserById(int id) {
-        Session session = HibernateUtil.getSessionAnnotationFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
-
-        Query query = session.createQuery("from USER where id= :id");
-        query.setLong("id", id);
-
-        User user = (User) query.uniqueResult();
-        session.getTransaction().commit();
-        return user;
-    }
-
-    private User getUserByLogin(String login) {
-        Session session = HibernateUtil.getSessionAnnotationFactory().getCurrentSession();
-        Transaction tx = session.beginTransaction();
-
-        Query query = session.createQuery("from USER where login= :login");
-        query.setString("login", login);
-
-        User user = (User) query.uniqueResult();
-        session.getTransaction().commit();
-        return user;
     }
 }

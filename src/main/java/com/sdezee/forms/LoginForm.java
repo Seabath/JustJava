@@ -28,14 +28,14 @@ public class LoginForm {
         String login = getValueForm(req, FORM_LOGIN);
         String password = getValueForm(req, FORM_PASS);
 
-        User user = new User();
+        User user;
         if (!checkLogin(login))
             errors.put(FORM_LOGIN, "Bad login");
-        user.setLogin(login);
+        user = User.getUser(login);
         if (!checkPassword(password))
             errors.put(FORM_PASS, "Bad password");
-
-        user.setPassword(password);
+        if (!user.getPassword().equals(password))
+            errors.put(FORM_PASS, "Bad password");
 
         if (errors.isEmpty())
             result = "Success";

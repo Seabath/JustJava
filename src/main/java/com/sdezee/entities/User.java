@@ -1,6 +1,8 @@
 package main.java.com.sdezee.entities;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -8,6 +10,7 @@ public class User {
     private final static String DB_URL = "jdbc:mysql://localhost/JustJava";
     private final static String DB_USER = "java";
     private final static String DB_PASS = "java";
+    private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 
     private int id;
 
@@ -49,7 +52,7 @@ public class User {
         ResultSet resultSet;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(st);
@@ -61,7 +64,8 @@ public class User {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null)
+                    connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -77,6 +81,7 @@ public class User {
         ResultSet resultSet;
 
         try {
+            Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(st);
@@ -85,6 +90,8 @@ public class User {
             user.setLogin(resultSet.getString("login"));
             user.setPassword(resultSet.getString("password"));
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
@@ -95,5 +102,37 @@ public class User {
         }
 
         return user;
+    }
+
+    public static List<User> getUsers(String login) {
+        List<User> userList = new ArrayList<User>();
+        String st = "select id, login from USER where login LIKE \"%" + login + "%\"";
+        Connection connection = null;
+        ResultSet resultSet;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(st);
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setLogin(resultSet.getString("login"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return userList;
     }
 }
