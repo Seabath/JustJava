@@ -14,7 +14,6 @@ import java.util.List;
 public class Search extends HttpServlet {
 
     public static final String ATT_USERS = "users";
-    public static final String ATT_USER = "user";
     public static final String ATT_FORM = "form";
     public static final String ATT_SESSION_USER = "sessionUser";
     public static final String VIEW = "/WEB-INF/search.jsp";
@@ -22,7 +21,7 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (session.getAttribute(ATT_USER) == null) {
+        if (session.getAttribute(ATT_SESSION_USER) == null) {
             resp.sendRedirect("/login");
             return;
         }

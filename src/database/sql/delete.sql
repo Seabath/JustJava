@@ -1,0 +1,8 @@
+DELIMITER $$;
+DROP FUNCTION IF EXISTS delete_user;
+CREATE FUNCTION delete_user(p_id INT)
+  RETURNS INT
+  BEGIN
+    DELETE FROM USER where id = p_id;
+    RETURN LAST_INSERT_ID();
+  END;

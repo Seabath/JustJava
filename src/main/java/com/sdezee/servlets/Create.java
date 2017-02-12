@@ -12,9 +12,8 @@ import java.io.IOException;
 
 public class Create extends HttpServlet {
 
-    public static final String ATT_USER = "user";
-    public static final String ATT_FORM = "form";
     public static final String ATT_SESSION_USER = "sessionUser";
+    public static final String ATT_FORM = "form";
     public static final String VIEW = "/WEB-INF/create.jsp";
 
     @Override
@@ -30,20 +29,21 @@ public class Create extends HttpServlet {
         HttpSession session = req.getSession();
 
         if (form.getErrors().isEmpty() && user != null) {
-            session.setAttribute(ATT_USER, user);
             int res = user.insertDatabase();
             if (res != 0) {
-                resp.sendRedirect("/index");
-                return;
+                if (session.getAttribute(ATT_SESSION_USER) == null) {
+                    session.setAttribute(ATT_SESSION_USER, user);
+                    resp.sendRedirect("/index");
+                    return;
+                }
             }
             else
                 form.addError(CreateForm.FORM_LOGIN, "Login already exists"); // pas forcément cette raison, mais osef
-        } else
-            session.setAttribute(ATT_USER, null);
-
-        form.setResult("failed");
-        req.setAttribute(ATT_FORM, form);
-        req.setAttribute(ATT_USER, user);
+        }
+        else {
+            form.setResult("failed");
+            req.setAttribute(ATT_FORM, form);
+        }
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
     }

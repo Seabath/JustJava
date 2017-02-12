@@ -25,12 +25,11 @@ public class ChangeForm {
         return result;
     }
 
-    public User connectUser(HttpServletRequest req) {
+    public void updateUser(HttpServletRequest req, User user) {
         String login = getValueForm(req, FORM_LOGIN);
         String password = getValueForm(req, FORM_PASS);
         String password2 = getValueForm(req, FORM_PASS2);
 
-        User user = new User();
         if (!checkLogin(login))
             errors.put(FORM_LOGIN, "Bad login");
         user.setLogin(login);
@@ -43,7 +42,6 @@ public class ChangeForm {
             result = "Success";
         else
             result = "Failure";
-        return user;
     }
 
     private boolean checkLogin(String login) {

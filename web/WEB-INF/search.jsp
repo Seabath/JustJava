@@ -10,13 +10,7 @@
 
 <div class="container" style="margin-top:65px">
     <div class="jumbotron">
-        <h3>Welcome to My awesome project</h3>
-        <h2>Bonjour
-            <%
-                String attribut = (String) request.getAttribute("user");
-                out.println(attribut);
-            %>
-        </h2>
+        <h3>Search</h3>
     </div>
     <form method="post" action="/search" role="form" class="row">
         <fieldset>
@@ -31,23 +25,28 @@
         </fieldset>
     </form>
 
-    <h1>Result</h1>
-    <table class="table table-stripped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Login</th>
-        </tr>
-        </thead>
-
-        <c:forEach items="${users}" var="search">
+    <c:if test="${users != null}">
+        <h1>Result</h1>
+        <table class="table table-stripped">
+            <thead>
             <tr>
-                <td><c:out value="${search.id}"/></td>
-                <td><c:out value="${search.login}"/></td>
-                <td><a class="btn btn-info" role="button" href="/modifier?id=${search.id}">Modifier</a></td>
+                <th>ID</th>
+                <th>Login</th>
             </tr>
-        </c:forEach>
-    </table>
+            </thead>
+
+            <c:forEach items="${users}" var="user">
+                <tr>
+                    <td><c:out value="${user.id}"/></td>
+                    <td><c:out value="${user.login}"/></td>
+                    <td><a class="btn btn-info" role="button" href="/change?id=${user.id}">Modifier</a></td>
+                    <c:if test="${sessionUser.id != user.id}">
+                        <td><a class="btn btn-danger" role="button" href="/delete?id=${user.id}">Supprimer</a></td>
+                    </c:if>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
 </div>
 </body>
 </html>

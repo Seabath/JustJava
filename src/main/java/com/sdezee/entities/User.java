@@ -74,6 +74,66 @@ public class User {
         return id;
     }
 
+    public boolean updateDatabase() {
+        String st = "select update_user(\"" +
+                login + "\", \"" + password + "\")";
+        Connection connection = null;
+        ResultSet resultSet;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(st);
+            resultSet.next();
+            id = resultSet.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public int deleteDatabase() {
+        String st = "select delete_user(" + id + ");";
+        Connection connection = null;
+        ResultSet resultSet;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(st);
+            resultSet.next();
+            id = resultSet.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null)
+                    connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return id;
+    }
+
     public static User getUser(String login) {
         User user = new User();
         String st = "select id, login, password from USER where login = \"" + login + "\"";
@@ -134,5 +194,35 @@ public class User {
         }
 
         return userList;
+    }
+
+    public static User getUser(int id) {
+        User user = new User();
+        String st = "select id, login, password from USER where id = " + id + "";
+        Connection connection = null;
+        ResultSet resultSet;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(st);
+            resultSet.next();
+            user.setId(resultSet.getInt("id"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return user;
     }
 }

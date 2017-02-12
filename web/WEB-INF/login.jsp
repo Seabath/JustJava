@@ -14,12 +14,12 @@
         <fieldset>
             <div class="form-group col-sm-4">
                 <label for="login">Login*</label>
-                <input type="text" class="form-control" id="login" name='login' <c:out value="${user.login}"/>
+                <input type="text" class="form-control" id="login" name='login'>
                 <span class="">${form.errors['login']}</span>
             </div>
             <div class="form-group col-sm-4">
                 <label for="password">Password*</label>
-                <input type="password" class="form-control" id="password" name="password" <c:out value="${user.password}"/>
+                <input type="password" class="form-control" id="password" name="password">
                 <span class="">${form.errors['password']}</span>
             </div>
             <div class="col-sm-12">

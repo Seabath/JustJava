@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,10 +12,7 @@
     <div class="jumbotron">
         <h3>Welcome to My awesome project</h3>
         <h2>Bonjour
-            <%
-                String attribut = (String) request.getAttribute("user");
-                out.println(attribut);
-            %>
+            <c:out value="${sessionUser.login}"></c:out>
         </h2>
     </div>
 </div>
